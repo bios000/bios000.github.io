@@ -433,18 +433,20 @@
         <article class="index-post">
             <a class="abstract-title" href="/2023/02/28/orm_1/">
                 
-                <span class="abstract-title-text">关于ORM的一些小Tips</span>
+                <span class="abstract-title-text">[Untitled Post]</span>
             </a>
             <div class="abstract-content">
-                前言开发中的大部分功能本质都是对数据库的操作，之前一直遇到 nyconnnections  这个错误估计也是由于代码质量不高,对数据库的重复操作次数以及连接数太多导致的。自己通过django对数据库的操作主要是通过ORM,所以掌握关于ORM能够减少查询的tips确实能够帮助提升很大一部分性能。这里赞美GPT，感谢GPT给出的各种优化方案。这里也顺便记录一下关于数据库操作遇到的一些小技巧，以后拒绝只用get fliter
+                前言开发中的大部分功能本质都是对数据库的操作，之前一直遇到 nyconnnections  这个错误估计也是代码质量不高导致,所以对数据库的重复操作次数以及连接数太多导致的。自己通过django对数据库的操作主要是通过ORM,所以掌握关于ORM能够减少查询的tips确实能够帮助提升很大一部分性能。在这里赞美GPT,给了非常多的优化方案
 关于查询
-当你查询单个主对象或主对象列表并需要在模板 或其它地方中使用到每个对象的关联对象信息时，请一定记住使用select_related和prefetch_relat...
+当你查询单个主对象或主对象列表并需要在模板或其它地方中使用到每个对象的关联对象信息时，请一定记住使用select_related和prefetch_related一次性获取所有对象信息，从而提升数据库查询效率，避免重复查询。
+
+这部分的优化场景，...
             </div>
             <!-- read more -->
             
             <div class="abstract-post-meta">
                 <!-- date -->
-                <div class="abstract-date" title="Last updated: 2023/02/28">
+                <div class="abstract-date" title="Last updated: 2023/03/01">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2023/02/28</span>
                 </div>
                 <!-- tags -->
@@ -589,7 +591,7 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span>
-            <a class="archive-post-title" href="/2023/02/28/orm_1/">关于ORM的一些小Tips</a>
+            <a class="archive-post-title" href="/2023/02/28/orm_1/">[Untitled Post]</a>
         </li>
     
     </div>
