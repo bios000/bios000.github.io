@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://obsidian-1302498057.cos.ap-nanjing.myqcloud.com/obsidian/20230424173254.png">
 <meta property="og:image" content="https://obsidian-1302498057.cos.ap-nanjing.myqcloud.com/obsidian/20230424220355.png">
 <meta property="article:published_time" content="2023-04-24T14:36:25.000Z">
-<meta property="article:modified_time" content="2023-04-24T14:37:55.446Z">
+<meta property="article:modified_time" content="2023-04-24T14:44:24.359Z">
 <meta property="article:author" content="bios000">
 <meta property="article:tag" content="《Java 安全》笔记">
 <meta name="twitter:card" content="summary">
@@ -498,16 +498,14 @@
     <article class="article-entry">
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这段时间一直在研究JNDI的相关内容，感觉一直研究的比较浅，索性尝试写篇文记录一下学习的路程，看能不能将之前理解的比较浅显的地方再深一步挖掘一下。</p>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>学习一项新的技术，首先要做的就是把他的关键词概念都搞懂，再去研究概念间的各种联系和实现原理，但令人尴尬的是，光这些概念，就需要占用一篇文章的字数去介绍，不过说明的越详细和清晰，在后续实现原理的理解上也就越容易。</p>
-<h3 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h3><p>JNDI中文名Java 命名和目录接口(JAVA Naming and Directory Interface)，他是Java内置的API ,J2EE规范要求所有J2EE容器都要提供JNDI规范的实现，他的角色就是相当于J2EE中的”114“，即JNDI是J2EE提供给J2EE组件在运行时间定位查找其他组件、资源和服务的一种机制(所以JNDI是一种规范和机制的实现)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在现实生活中，当你知道这个世界上存在一个你知道其名字或拥有具体技能的人，你想找到他，但却从未和他建立过联系，你会怎么办？再具体点，傍晚下班回家，你发现你钥匙丢了，你需要一个开锁公司的人帮你开门那么你会怎么办？(切实经历)</span><br><span class="line">我想一般的做法都是会拨打114(找生活服务平台)找到对应提供服务的人帮你干成这个事情</span><br><span class="line">而JNDI就类似于这样的角色存在，他会帮你寻找和转接到(lookup)到你所需要的服务资源</span><br></pre></td></tr></table></figure>
-
+<h2 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h2><p>JNDI中文名Java 命名和目录接口(JAVA Naming and Directory Interface)，他是Java内置的API ,J2EE规范要求所有J2EE容器都要提供JNDI规范的实现，他的角色就是相当于J2EE中的”114“，即JNDI是J2EE提供给J2EE组件在运行时间定位查找其他组件、资源和服务的一种机制(所以JNDI是一种规范和机制的实现)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在现实生活中，当你知道这个世界上存在一个你知道其名字或拥有具体技能的人，你想找到他，</span><br><span class="line">但却从未和他建立过联系，你会怎么办？再具体点，傍晚下班回家，你发现你钥匙丢了，</span><br><span class="line">你需要一个开锁公司的人帮你开门那么你会怎么办？(真实经历)</span><br><span class="line">我想一般的做法都是会拨打114(找生活服务平台)找到对应提供服务的人帮你干成这个事情</span><br><span class="line">而JNDI就类似于这样的角色存在，他会帮你寻找和转接到(lookup)到你所需要的服务资源</span><br></pre></td></tr></table></figure>
 
 <p>我为什么介绍得那么详细呢，因为我也想弄清楚What is JNDI ，在没有实际的J2EE项目开发的经验下理解抽象的机制和接口规范确实是一件很困难的事情。如果还是不能理解，网上也给了一个不全面但易于理解的解释：<br>”你可以认为JNDI是一个配置中心，也可以认为它是一个命名服务。其根本功能，就是让你可以通过一个简短的字符串，就能获取一系列的复杂配置和初始化后的功能。“</p>
-<h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>SPI 的全程为Service Provider Interface，他又是一个J2EE高级开发必须理解的一个机制(我愿称java是一个机制怪)，它是一套用来被第三方实现或扩展的API,他可以用来启动框架扩展和替换组件。这个SPI的核心思想就是帮助项目应用解耦。这里继续用一张图和一个例子帮助去理解SPI<br><img src="https://obsidian-1302498057.cos.ap-nanjing.myqcloud.com/obsidian/20230424172724.png" alt="image.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">今天是星期六没上班，也就意味着你得在家里把**吃饭（调用方）** 的问题解决了，那这个时候你疯狂转动大脑想该**吃啥（标准服务接口）**，摆在小易面前有两个选择：**外卖、楼下的饭店（服务提供方）**。最后小易同学选择吃了楼下便宜又方便的大排面，毕竟贫穷限制了选择空间。</span><br></pre></td></tr></table></figure>
+<h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><p>SPI 的全程为Service Provider Interface，他又是一个J2EE高级开发必须理解的一个机制(我愿称java是一个机制怪)，它是一套用来被第三方实现或扩展的API,他可以用来启动框架扩展和替换组件。这个SPI的核心思想就是帮助项目应用解耦。这里继续用一张图和一个例子帮助去理解SPI<br><img src="https://obsidian-1302498057.cos.ap-nanjing.myqcloud.com/obsidian/20230424172724.png" alt="image.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">今天是星期六没上班，也就意味着你得在家里把**吃饭（调用方）** 的问题解决了，</span><br><span class="line">那这个时候你疯狂转动大脑想该**吃啥（标准服务接口）**，摆在小易面前有两个选择：</span><br><span class="line">**外卖、楼下的饭店（服务提供方）**。最后小易同学选择吃了楼下便宜又方便的大排面，</span><br><span class="line">毕竟贫穷限制了选择空间。</span><br></pre></td></tr></table></figure>
 
-<h4 id="SPI和API有什么区别"><a href="#SPI和API有什么区别" class="headerlink" title="SPI和API有什么区别"></a>SPI和API有什么区别</h4><p>这个找篇文帮大家去理解[[关于API 与 SPI]]</p>
-<h3 id="JNDI-架构"><a href="#JNDI-架构" class="headerlink" title="JNDI 架构"></a>JNDI 架构</h3><p><img src="https://obsidian-1302498057.cos.ap-nanjing.myqcloud.com/obsidian/20230424173254.png" alt="image.png"></p>
+<h2 id="JNDI-架构"><a href="#JNDI-架构" class="headerlink" title="JNDI 架构"></a>JNDI 架构</h2><p><img src="https://obsidian-1302498057.cos.ap-nanjing.myqcloud.com/obsidian/20230424173254.png" alt="image.png"></p>
 <p>上述角色如下</p>
 <ul>
 <li><p>应用程序代码（Application Code）：使用JNDI API访问命名和目录服务的Java应用程序。</p>
@@ -525,9 +523,9 @@
 <li>JNDI API会调用命名服务（Naming Manager）去实例化 JNDI SPI对象</li>
 <li>JNDI SPI 去根据配置选择对应服务的实现(如LDAP,DNS,RMI)，将最终结果返回至JNDI API</li>
 </ol>
-<h3 id="LDAP与RMI"><a href="#LDAP与RMI" class="headerlink" title="LDAP与RMI"></a>LDAP与RMI</h3><h4 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h4><p>ldap(Lightweight Directory Access Protocol) 是一种轻量级的目录访问协议，用于分布式环境中访问和维护目录信息。LDAP通常用于存储和访问用户、组、设备等信息，例如企业的员工信息、权限信息</p>
+<h2 id="LDAP与RMI"><a href="#LDAP与RMI" class="headerlink" title="LDAP与RMI"></a>LDAP与RMI</h2><h3 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h3><p>ldap(Lightweight Directory Access Protocol) 是一种轻量级的目录访问协议，用于分布式环境中访问和维护目录信息。LDAP通常用于存储和访问用户、组、设备等信息，例如企业的员工信息、权限信息</p>
 <h3 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h3><p>RMI(Remote Method Invocation 远程方法调用)，远程方法是分布式编程中的一个基本思想，RMI则是专门为Java设计，依赖JRMP通信协议(Java Remote Message Protocol java 远程消息交换协议)，你可以理解成RMI是java语言中实现RPC的一种方式</p>
-<h4 id="JNDI与RMI-LDAP的联系"><a href="#JNDI与RMI-LDAP的联系" class="headerlink" title="JNDI与RMI LDAP的联系"></a>JNDI与RMI LDAP的联系</h4><p>JDK中包含了RMI LDAP内置的目录服务，他们在JNDI中提供了绑定和查找的方法</p>
+<h3 id="JNDI与RMI-LDAP的联系"><a href="#JNDI与RMI-LDAP的联系" class="headerlink" title="JNDI与RMI LDAP的联系"></a>JNDI与RMI LDAP的联系</h3><p>JDK中包含了RMI LDAP内置的目录服务，他们在JNDI中提供了绑定和查找的方法，其实JNDI还实现了非常多服务，这里只挑最典型的<br>说一下</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>看完之前的这些概念，你已经大致清楚想弄清楚JNDI 需要涉及到哪些东西，接下来，我们将通过实现的过程进一步去理解相关的概念</p>
 <h3 id="RMI-与LDAP-的实现"><a href="#RMI-与LDAP-的实现" class="headerlink" title="RMI 与LDAP 的实现"></a>RMI 与LDAP 的实现</h3><h3 id="RMI-架构的实现"><a href="#RMI-架构的实现" class="headerlink" title="RMI 架构的实现"></a>RMI 架构的实现</h3><p>一般情况下java的方法调用指的是同一个JVM内的方法调用，而RMI就是跨越JVM去调用一个远程的方法。通俗点说，RMI 可以使我们引用远程主机上的对象，将Java对象作为参数传递。</p>
 <p>那我们需要实现代码的目的也很简单，运行在JVM a上的程序A远程调用运行在JVM b 上的项目B上的服务</p>
@@ -573,7 +571,7 @@
             <p>原文作者：<a href="http://bios000.github.io">bios000</a>
             <p>原文链接：<a href="http://bios000.github.io/2023/04/24/My-security-understanding-of-JNDI-1/">http://bios000.github.io/2023/04/24/My-security-understanding-of-JNDI-1/</a>
             <p>发表日期：<a href="http://bios000.github.io/2023/04/24/My-security-understanding-of-JNDI-1/">April 24th 2023, 10:36:25 pm</a>
-            <p>更新日期：<a href="http://bios000.github.io/2023/04/24/My-security-understanding-of-JNDI-1/">April 24th 2023, 10:37:55 pm</a>
+            <p>更新日期：<a href="http://bios000.github.io/2023/04/24/My-security-understanding-of-JNDI-1/">April 24th 2023, 10:44:24 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -730,7 +728,7 @@
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI"><span class="toc-number">2.1.</span> <span class="toc-text">JNDI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPI"><span class="toc-number">2.2.</span> <span class="toc-text">SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SPI%E5%92%8CAPI%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.1.</span> <span class="toc-text">SPI和API有什么区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI-%E6%9E%B6%E6%9E%84"><span class="toc-number">2.3.</span> <span class="toc-text">JNDI 架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LDAP%E4%B8%8ERMI"><span class="toc-number">2.4.</span> <span class="toc-text">LDAP与RMI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LDAP"><span class="toc-number">2.4.1.</span> <span class="toc-text">LDAP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI"><span class="toc-number">2.5.</span> <span class="toc-text">RMI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JNDI%E4%B8%8ERMI-LDAP%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-number">2.5.1.</span> <span class="toc-text">JNDI与RMI LDAP的联系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI-%E4%B8%8ELDAP-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.1.</span> <span class="toc-text">RMI 与LDAP 的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI-%E6%9E%B6%E6%9E%84%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.</span> <span class="toc-text">RMI 架构的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E8%BF%9C%E7%A8%8B%E6%8E%A5%E5%8F%A3%EF%BC%8C%E5%A3%B0%E6%98%8E%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%B1%BB"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">声明远程接口，声明实现远程接口类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E7%8E%B0%E5%AE%8C%E6%88%90%E8%BF%9C%E7%A8%8B%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">服务端实现完成远程对象绑定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">完整的服务端代码实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.1.4.</span> <span class="toc-text">客户端代码实现</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">引用</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JNDI"><span class="toc-number">3.</span> <span class="toc-text">JNDI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPI"><span class="toc-number">4.</span> <span class="toc-text">SPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JNDI-%E6%9E%B6%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">JNDI 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDAP%E4%B8%8ERMI"><span class="toc-number">6.</span> <span class="toc-text">LDAP与RMI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LDAP"><span class="toc-number">6.1.</span> <span class="toc-text">LDAP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI"><span class="toc-number">6.2.</span> <span class="toc-text">RMI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNDI%E4%B8%8ERMI-LDAP%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-number">6.3.</span> <span class="toc-text">JNDI与RMI LDAP的联系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI-%E4%B8%8ELDAP-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.1.</span> <span class="toc-text">RMI 与LDAP 的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMI-%E6%9E%B6%E6%9E%84%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.2.</span> <span class="toc-text">RMI 架构的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">7.2.1.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E8%BF%9C%E7%A8%8B%E6%8E%A5%E5%8F%A3%EF%BC%8C%E5%A3%B0%E6%98%8E%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E6%8E%A5%E5%8F%A3%E7%B1%BB"><span class="toc-number">7.2.1.1.</span> <span class="toc-text">声明远程接口，声明实现远程接口类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E7%8E%B0%E5%AE%8C%E6%88%90%E8%BF%9C%E7%A8%8B%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A"><span class="toc-number">7.2.1.2.</span> <span class="toc-text">服务端实现完成远程对象绑定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.2.1.3.</span> <span class="toc-text">完整的服务端代码实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.2.1.4.</span> <span class="toc-text">客户端代码实现</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text">引用</span></a></li></ol>
             </div>
         
         <!-- sidebar -->
@@ -764,10 +762,6 @@
         
         
         
-        
-        
-        
-        
     
     
     
@@ -784,6 +778,21 @@
     
         
             
+            
+            <div class="archive-year"> 2023 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span>
+            <a class="archive-post-title" href="/2023/04/24/My-security-understanding-of-JNDI-1/">My security understanding of JNDI (1)</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
             
             <div class="archive-year"> Invalid date </div>
             <ul class="year-list">
@@ -803,12 +812,6 @@
             <div class="archive-year"> 2023 </div>
             <ul class="year-list">
             
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span>
-            <a class="archive-post-title" href="/2023/04/24/My-security-understanding-of-JNDI-1/">My security understanding of JNDI (1)</a>
-        </li>
-    
         
         <li class="archive-post-item">
             <span class="archive-post-date">03/22</span>
