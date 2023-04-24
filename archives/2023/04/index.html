@@ -22,7 +22,7 @@
     <meta name="description" content="I am bios00, An interesting Cyber Security Engineer">
 <meta property="og:type" content="website">
 <meta property="og:title" content="bios000">
-<meta property="og:url" content="http://bios000.github.io/tags/%E3%80%8AJava-%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88%E3%80%8B%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="http://bios000.github.io/archives/2023/04/index.html">
 <meta property="og:site_name" content="bios000">
 <meta property="og:description" content="I am bios00, An interesting Cyber Security Engineer">
 <meta property="og:locale">
@@ -431,31 +431,28 @@
             
         
         <article class="index-post">
-            <a class="abstract-title" href="/2023/03/22/%E3%80%8AJava-%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88%E4%B8%80%E5%8F%8D%E5%B0%84%E7%AF%87%E3%80%8B%E7%AC%94%E8%AE%B0/">
+            <a class="abstract-title" href="/2023/04/24/My-security-understanding-of-JNDI-1/">
                 
-                <span class="abstract-title-text">《Java 安全漫谈一反射篇》笔记</span>
+                <span class="abstract-title-text">My security understanding of JNDI (1)</span>
             </a>
             <div class="abstract-content">
-                关于反射这里建议先阅读[[java反射学习]]
-作者将反射作为漫谈的第一部分内容
-
-对象可以通过反射获取他的类，类可以通过反射拿到所有的方法(包括私有)，拿到的方法可以调用，这就是动态特性–”一段代码，改变其中的变量，将会导致这段代码产生功能性的变化“
-
-1234public void execute(String className，String methodName) thorw Exception&#123;	class clazz = class.forName(class Name);	clazz.get(methodName).invoke(clazz.newInstance...
+                前言这段时间一直在研究JNDI的相关内容，感觉一直研究的比较浅，索性尝试写篇文记录一下学习的路程，看能不能将之前理解的比较浅显的地方再深一步挖掘一下。
+概念学习一项新的技术，首先要做的就是把他的关键词概念都搞懂，再去研究概念间的各种联系和实现原理，但令人尴尬的是，光这些概念，就需要占用一篇文章的字数去介绍，不过说明的越详细和清晰，在后续实现原理的理解上也就越容易。
+JNDIJNDI中文名Java 命名和目录接口(JAVA Naming and Directory Interface)，他是Java内置的API ,J2EE规范要求所有J2EE容器都要提供JNDI规范的实现，他的角色就是相当...
             </div>
             <!-- read more -->
             
             <div class="abstract-post-meta">
                 <!-- date -->
-                <div class="abstract-date" title="Last updated: 2023/03/22">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2023/03/22</span>
+                <div class="abstract-date" title="Last updated: 2023/04/24">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2023/04/24</span>
                 </div>
                 <!-- tags -->
                 
                     <div class= abstract-tags >
     
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="《Java 安全漫谈》笔记">《Java 安全漫谈》笔记</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="《Java 安全》笔记">《Java 安全》笔记</a>
     
 </div>
 
@@ -581,7 +578,18 @@
         
         
         
+        
+        
+        
+        
+        
     
+        
+        
+        
+        
+        
+        
         
         
     
@@ -590,7 +598,7 @@
     
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 2
+        Total : 3
         </div>
         <!-- search  -->
         
@@ -607,7 +615,7 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span>
-            <a class="archive-post-title" href="/2023/02/28/orm_1/">关于ORM的一些TipS</a>
+            <a class="archive-post-title" href="/2023/02/28/orm_1/">关于ORM的一些Tips</a>
         </li>
     
         
@@ -621,8 +629,14 @@
             
         
         <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span>
+            <a class="archive-post-title" href="/2023/04/24/My-security-understanding-of-JNDI-1/">My security understanding of JNDI (1)</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
             <span class="archive-post-date">03/22</span>
-            <a class="archive-post-title" href="/2023/03/22/%E3%80%8AJava-%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88%E4%B8%80%E5%8F%8D%E5%B0%84%E7%AF%87%E3%80%8B%E7%AC%94%E8%AE%B0/">《Java 安全漫谈一反射篇》笔记</a>
+            <a class="archive-post-title" href="/2023/03/22/%E3%80%8AJava-%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88%E4%B8%80%E5%8F%8D%E5%B0%84%E7%AF%87%E3%80%8B%E7%AC%94%E8%AE%B0/">《Java 安全一反射篇》笔记</a>
         </li>
     
     </div>
@@ -631,9 +645,9 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
         
-            <span class="sidebar-tag-name" data-tags="《Java 安全漫谈》笔记">
+            <span class="sidebar-tag-name" data-tags="《Java 安全》笔记">
                 <span class="iconfont-archer">&#xe606;</span>
-                《Java 安全漫谈》笔记
+                《Java 安全》笔记
             </span>
         
     </div>
